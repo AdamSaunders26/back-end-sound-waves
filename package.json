@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "setup": "psql -f ./db/seeds/setup.sql",
-    "seed": "PGDATABASE=test_sw node dist/db/seeds/run-seed.js",
+    "seed": "node dist/db/seeds/run-seed.js",
     "test": "jest",
     "seed-prod": "NODE_ENV=production npm run seed",
     "build": "npx tsc",

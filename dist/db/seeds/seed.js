@@ -30,6 +30,7 @@ const seed = ({ boardsData, usersData, wavesData, commentsData }) => {
       board_id SERIAL PRIMARY KEY,
       title VARCHAR NOT NULL,
       slug VARCHAR NOT NULL,
+      description VARCHAR NOT NULL,
       created_at VARCHAR NOT NULL,
       user_id INT REFERENCES users(user_id) NOT NULL
     );`);
@@ -64,11 +65,12 @@ const seed = ({ boardsData, usersData, wavesData, commentsData }) => {
         return db.query(insertUsersData);
     })
         .then(() => {
-        const insertBoardsData = format("INSERT INTO boards ( title, slug, created_at, user_id) VALUES %L RETURNING * ", boardsData.map(({ title, slug, created_at, user_id }) => [
+        const insertBoardsData = format("INSERT INTO boards ( title, slug, created_at, user_id, description ) VALUES %L RETURNING * ", boardsData.map(({ title, slug, created_at, user_id, description }) => [
             title,
             slug,
             created_at,
             user_id,
+            description,
         ]));
         return db.query(insertBoardsData);
     })

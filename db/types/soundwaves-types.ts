@@ -8,3 +8,12 @@ export interface Wave {
     transcript: string,
     censor: boolean
 }
+
+export interface Board {
+    board_id: number,
+    title: string,
+    slug: string,
+    created_at: string,
+    user_id: number,
+    description: string,
+}

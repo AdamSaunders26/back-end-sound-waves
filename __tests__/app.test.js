@@ -32,3 +32,26 @@ describe('GET /api/waves', () => {
             })
     });
 });
+describe('GET /api/boards', () => {
+    test('200: should return all boards', () => {
+        return request(app)
+            .get('/api/boards')
+            .expect(200)
+            .then(({ body }) => {
+                const { boards } = body
+                expect(Array.isArray(boards)).toBe(true)
+                expect(body.boards).toHaveLength(10)
+                const expectedBoards = {
+                    board_id: expect.any(Number),
+                    title: expect.any(String),
+                    slug: expect.any(String),
+                    created_at: expect.any(String),
+                    user_id: expect.any(Number),
+                    description: expect.any(String),
+                }
+                boards.forEach((board) => {
+                    expect(board).toMatchObject(expectedBoards)
+                })
+            })
+    });
+});

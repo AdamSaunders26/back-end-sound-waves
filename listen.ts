@@ -1,4 +1,4 @@
-const app = require("./dist/app")
+const app = require("./app")
 
 const port = process.env.PORT || 9091
 

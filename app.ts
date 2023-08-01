@@ -1,19 +1,15 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
+import { getWaves } from './db/controllers/waves.controller';
 
 dotenv.config();
 
 const app: Express = express();
-const port = process.env.PORT || 9091;
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Express + TypeScript Server');
 });
 
-
-
-app.listen(port, () => {
-    console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
-});
+app.get('/api/waves', getWaves)
 
 module.exports = app

@@ -1,3 +1,5 @@
-DROP DATABASE IF EXISTS test_sw;
+DROP DATABASE IF EXISTS soundwaves_test;
+DROP DATABASE IF EXISTS soundwaves_development;
 
-CREATE DATABASE test_sw;
+CREATE DATABASE soundwaves_test;
+CREATE DATABASE soundwaves_development;

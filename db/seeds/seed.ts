@@ -43,7 +43,7 @@ const seed = ({ boardsData, usersData, wavesData, commentsData }) => {
       user_id INT REFERENCES users (user_id) NOT NULL,
       board_id INT REFERENCES boards (board_id) NOT NULL,
       transcript VARCHAR,
-      censor BOOLEAN,
+      censor BOOLEAN DEFAULT true,
       likes INT DEFAULT 0
     );`);
     })
@@ -115,3 +115,4 @@ const seed = ({ boardsData, usersData, wavesData, commentsData }) => {
 };
 
 module.exports = seed;
+export {}

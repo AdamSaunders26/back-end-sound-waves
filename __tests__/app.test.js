@@ -47,12 +47,11 @@ describe("GET /api/boards", () => {
         expect(Array.isArray(boards)).toBe(true);
         expect(body.boards).toHaveLength(10);
         const expectedBoards = {
-          board_id: expect.any(Number),
-          title: expect.any(String),
-          slug: expect.any(String),
-          created_at: expect.any(String),
-          user_id: expect.any(Number),
+          board_name: expect.any(String),
+          board_slug: expect.any(String),
           description: expect.any(String),
+          created_at: expect.any(String),
+          username: expect.any(String),
         };
         boards.forEach((board) => {
           expect(board).toMatchObject(expectedBoards);

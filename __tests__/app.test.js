@@ -55,3 +55,24 @@ describe('GET /api/boards', () => {
             })
     });
 });
+
+describe('POST /api/waves', () => {
+    test.only('201: Creates a new wave', () => {
+        const testFormData = new FormData;
+
+        testFormData.append('title', 'Test Wave Title');
+        testFormData.append('username', 'testuser');
+        testFormData.append('board_slug', 'board-slug');
+
+        const testUpload = new Blob()
+
+        // const testRequestData = {
+        //     title: 'Test Wave Title',
+        //     username: 'testuser',
+        //     board_slug: 'board-slug',
+        //     upload: fs
+        // };
+
+         console.log(testFormData);
+    });
+});

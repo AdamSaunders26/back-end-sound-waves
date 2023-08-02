@@ -2,7 +2,7 @@
   "name": "back-end-sound-waves",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/listen.js",
   "scripts": {
     "setup": "psql -f ./db/seeds/setup.sql",
     "seed": "node dist/db/seeds/run-seed.js",

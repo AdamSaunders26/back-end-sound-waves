@@ -83,3 +83,26 @@ describe("GET /api/waves/:wave_id/comments", () => {
       });
   });
 });
+
+describe("GET /api/waves/:wave_id", () => {
+  test("should return a single wave when given an id ", () => {
+    return request(app)
+      .get("/api/waves/3")
+      .expect(200)
+      .then(({ body }) => {
+        const { wave } = body;
+        const expectedWave = {
+          wave_id: expect(3),
+          title: expect.any(String),
+          wave_url: expect.any(String),
+          created_at: expect.any(String),
+          transcript: expect.any(String),
+          likes: expect.any(Number),
+          censor: expect.any(Boolean),
+          username: expect.any(String),
+          board_name: expect.any(String),
+        };
+        expect(wave).toMatchObject(expectedWave);
+      });
+  });
+});

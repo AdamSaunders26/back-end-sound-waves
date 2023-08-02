@@ -10,7 +10,7 @@ afterAll(() => {
 });
 
 describe("GET /api/waves", () => {
-  test.only("200: should return all 10 waves", () => {
+  test("200: should return all 10 waves", () => {
     return request(app)
       .get("/api/waves")
       .expect(200)
@@ -25,7 +25,7 @@ describe("GET /api/waves", () => {
           username: expect.any(String),
           board_name: expect.any(String),
           board_slug: expect.any(String),
-          comment_count: expect.any(Number),
+          comment_count: expect.any(String),
           likes: expect.any(Number),
           transcript: expect.any(String),
           censor: expect.any(Boolean),

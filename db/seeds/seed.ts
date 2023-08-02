@@ -1,7 +1,18 @@
 const db = require("../connection");
 const format = require("pg-format");
+import { Wave, Board, Comment, User } from "../types/soundwaves-types";
 
-const seed = ({ boardsData, usersData, wavesData, commentsData }) => {
+const seed = ({
+  boardsData,
+  usersData,
+  wavesData,
+  commentsData,
+}: {
+  boardsData: Board[];
+  usersData: User[];
+  wavesData: Wave[];
+  commentsData: Comment[];
+}) => {
   return db
     .query(`DROP TABLE IF EXISTS comments;`)
     .then(() => {
@@ -117,4 +128,4 @@ const seed = ({ boardsData, usersData, wavesData, commentsData }) => {
 };
 
 module.exports = seed;
-export {}
+export {};

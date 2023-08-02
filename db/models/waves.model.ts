@@ -10,4 +10,5 @@ const waves_query = `SELECT wave_id(waves), title(waves), wave_url(waves), creat
  FROM waves 
  LEFT JOIN comments ON wave_id(waves)= wave_id(comments)
  LEFT JOIN boards ON board_name(boards) = board_name(waves)
- GROUP BY wave_id(waves), wave_id(comments), board_name(boards);`;
+ GROUP BY wave_id(waves), wave_id(comments), board_name(boards) 
+ ORDER BY wave_id(waves) DESC;`;

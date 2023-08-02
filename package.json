@@ -8,7 +8,7 @@
     "seed": "node dist/db/seeds/run-seed.js",
     "test": "jest",
     "seed-prod": "NODE_ENV=production npm run seed",
-    "build": "tsc",
+    "build": "npx tsc",
     "start": "node ./dist/listen.js",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/app.js\""
   },

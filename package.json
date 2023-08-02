@@ -2,14 +2,14 @@
   "name": "back-end-sound-waves",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/listen.js",
+  "main": "api/listen.js",
   "scripts": {
     "setup": "psql -f ./db/seeds/setup.sql",
     "seed": "node dist/db/seeds/run-seed.js",
     "test": "jest",
     "seed-prod": "NODE_ENV=production npm run seed",
     "build": "npx tsc",
-    "start": "node dist/app.js",
+    "start": "node api/listen.js",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/app.js\""
   },
   "keywords": [],

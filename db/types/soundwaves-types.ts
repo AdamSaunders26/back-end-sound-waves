@@ -3,18 +3,17 @@ export interface Wave {
   title: string;
   wave_url: string;
   created_at: string;
-  user_id: number;
-  board_id: number;
+  username: string;
+  board_name: string;
   transcript: string;
   censor: boolean;
 }
 
 export interface Board {
-  board_id: number;
-  title: string;
-  slug: string;
+  board_name: string;
+  board_slug: string;
   created_at: string;
-  user_id: number;
+  username: string;
   description: string;
 }
 
@@ -29,6 +28,6 @@ export interface User {
 export interface Comment {
   comment: string;
   created_at: string;
-  user_id: number;
+  username: string;
   wave_id: number;
 }

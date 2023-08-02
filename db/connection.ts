@@ -7,10 +7,10 @@ require("dotenv").config({
 });
 
 const config =
-  ENV === "production"
+  ENV !== "test"
     ? {
         connectionString: process.env.DATABASE_URL,
-        max: 2,
+        // max: 2,
       }
     : {};
 

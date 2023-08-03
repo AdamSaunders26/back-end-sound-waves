@@ -36,23 +36,22 @@ export const insertWave = (
     title,
     username,
     board_slug,
-    created_at,
   }: {
     title: string;
     username: string;
     board_slug: string;
-    created_at: string;
   },
   wave_url: string,
   transcript: string
 ): Promise<Wave> => {
-  return db.query(`
+  return db.query(
+    `
     INSERT INTO waves
-      (title, username, board_slug, wave_url, created_at, transcript)
+      (title, username, board_slug, wave_url, transcript)
     VALUES
-      ($1, $2, $3, $4, $5, $6)
+      ($1, $2, $3, $4, $5)
     RETURNING *;`,
-    [title, username, board_slug, wave_url, created_at, transcript]
+    [title, username, board_slug, wave_url, transcript]
   );
 };
 

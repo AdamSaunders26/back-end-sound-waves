@@ -4,7 +4,7 @@ export interface Wave {
   wave_url: string;
   created_at: string;
   username: string;
-  board_name: string;
+  board_slug: string;
   transcript: string;
   censor: boolean;
 }

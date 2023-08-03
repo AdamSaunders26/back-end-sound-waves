@@ -3,6 +3,7 @@ import {
   audioTranscriber,
   insertWave,
   selectWaves,
+  selectWaveById,
 } from "../models/waves.model";
 import { Wave } from "../types/soundwaves-types";
 import { createClient } from "@supabase/supabase-js";
@@ -24,6 +25,7 @@ export const storeWave = (req: Request, res: Response, next: NextFunction) => {
     <string>process.env.SUPABASE_PROJECT_URL,
     <string>process.env.SUPABASE_API_KEY
   );
+  
   const audioFilePath = `${__dirname}/../../../${req.file?.path}`;
   fs.readFile(audioFilePath)
     .then((file) => {
@@ -48,10 +50,17 @@ export const storeWave = (req: Request, res: Response, next: NextFunction) => {
     });
 };
 
-// export function receiveTranscript(
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) {
-//   console.log(req.body, "body");
-// }
+export const getWaveById = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { wave_id } = req.params;
+  selectWaveById(wave_id)
+    .then((wave: Wave) => {
+      res.status(200).send({ wave });
+    })
+    .catch((err) => {
+      console.log(err, "<<< getWaveById err");
+    });
+};

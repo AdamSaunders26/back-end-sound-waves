@@ -1,26 +1,26 @@
 module.exports = [
   {
-    username: "Big C",
+    username: "BigC",
     email: "klarmour0@facebook.com",
     avatar_url: "http://dummyimage.com/175x100.png/ff4444/ffffff",
   },
   {
-    username: "Big V",
+    username: "BigV",
     email: "rventris1@networksolutions.com",
     avatar_url: "http://dummyimage.com/102x100.png/ff4444/ffffff",
   },
   {
-    username: "Big J",
+    username: "BigJ",
     email: "ltibbits2@studiopress.com",
     avatar_url: "http://dummyimage.com/205x100.png/5fa2dd/ffffff",
   },
   {
-    username: "Big A",
+    username: "BigA",
     email: "cpragnell3@yellowbook.com",
     avatar_url: "http://dummyimage.com/182x100.png/dddddd/000000",
   },
   {
-    username: "Big M",
+    username: "BigM",
     email: "ashreenan4@imgur.com",
     avatar_url: "http://dummyimage.com/189x100.png/cc0000/ffffff",
   },

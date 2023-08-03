@@ -36,8 +36,8 @@ const seed = ({
     .then(() => {
       return db.query(`
     CREATE TABLE boards (
-      board_name VARCHAR NOT NULL PRIMARY KEY,
-      board_slug VARCHAR NOT NULL,
+      board_slug VARCHAR NOT NULL PRIMARY KEY,
+      board_name VARCHAR NOT NULL,
       description VARCHAR NOT NULL,
       created_at VARCHAR NOT NULL,
       username VARCHAR REFERENCES users(username) NOT NULL
@@ -51,7 +51,7 @@ const seed = ({
       wave_url VARCHAR NOT NULL,
       created_at VARCHAR NOT NULL,
       username VARCHAR REFERENCES users (username) NOT NULL,
-      board_name VARCHAR REFERENCES boards (board_name) NOT NULL,
+      board_slug VARCHAR REFERENCES boards (board_slug) NOT NULL,
       transcript VARCHAR,
       censor BOOLEAN DEFAULT true,
       likes INT DEFAULT 0
@@ -99,16 +99,16 @@ const seed = ({
     })
     .then(() => {
       const insertWavesData = format(
-        "INSERT INTO waves ( title, wave_url, created_at, username, board_name, transcript) VALUES %L RETURNING * ",
+        "INSERT INTO waves ( title, wave_url, created_at, username, board_slug, transcript) VALUES %L RETURNING * ",
         wavesData.map(
           ({
             title,
             wave_url,
             created_at,
             username,
-            board_name,
+            board_slug,
             transcript,
-          }) => [title, wave_url, created_at, username, board_name, transcript]
+          }) => [title, wave_url, created_at, username, board_slug, transcript]
         )
       );
       return db.query(insertWavesData);

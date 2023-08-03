@@ -37,6 +37,7 @@ describe("GET /api/waves", () => {
       });
   });
 });
+
 describe("GET /api/boards", () => {
   test("200: should return all boards", () => {
     return request(app)
@@ -84,47 +85,46 @@ describe("GET /api/waves/:wave_id/comments", () => {
   });
 });
 
-describe('GET /api/boards', () => {
-    test('200: should return all boards', () => {
-        return request(app)
-            .get('/api/boards')
-            .expect(200)
-            .then(({ body }) => {
-                const { boards } = body
-                expect(Array.isArray(boards)).toBe(true)
-                expect(body.boards).toHaveLength(10)
-                const expectedBoards = {
-                    board_id: expect.any(Number),
-                    title: expect.any(String),
-                    slug: expect.any(String),
-                    created_at: expect.any(String),
-                    user_id: expect.any(Number),
-                    description: expect.any(String),
-                }
-                boards.forEach((board) => {
-                    expect(board).toMatchObject(expectedBoards)
-                })
-            })
-    });
+describe("GET /api/waves/:wave_id", () => {
+  test("should return a single wave when given an id ", () => {
+    return request(app)
+      .get("/api/waves/3")
+      .expect(200)
+      .then(({ body }) => {
+        const { wave } = body;
+        const expectedWave = {
+          wave_id: 3,
+          title: expect.any(String),
+          wave_url: expect.any(String),
+          created_at: expect.any(String),
+          transcript: expect.any(String),
+          likes: expect.any(Number),
+          censor: expect.any(Boolean),
+          username: expect.any(String),
+          board_slug: expect.any(String),
+        };
+        expect(wave).toMatchObject(expectedWave);
+      });
+  });
 });
 
-describe('POST /api/waves', () => {
-    test.only('201: Creates a new wave', () => {
-        const testFormData = new FormData;
+describe("POST /api/waves", () => {
+  test("201: Creates a new wave", () => {
+    const testFormData = new FormData();
 
-        testFormData.append('title', 'Test Wave Title');
-        testFormData.append('username', 'testuser');
-        testFormData.append('board_slug', 'board-slug');
+    testFormData.append("title", "Test Wave Title");
+    testFormData.append("username", "testuser");
+    testFormData.append("board_slug", "board-slug");
 
-        const testUpload = new Blob()
+    const testUpload = new Blob();
 
-        // const testRequestData = {
-        //     title: 'Test Wave Title',
-        //     username: 'testuser',
-        //     board_slug: 'board-slug',
-        //     upload: fs
-        // };
+    // const testRequestData = {
+    //     title: 'Test Wave Title',
+    //     username: 'testuser',
+    //     board_slug: 'board-slug',
+    //     upload: fs
+    // };
 
-         console.log(testFormData);
-    });
+    console.log(testFormData);
+  });
 });

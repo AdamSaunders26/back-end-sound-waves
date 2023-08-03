@@ -103,6 +103,8 @@ describe("GET /api/waves/:wave_id", () => {
           censor: expect.any(Boolean),
           username: expect.any(String),
           board_slug: expect.any(String),
+          board_name: expect.any(String),
+          comment_count: expect.any(String),
         };
         expect(wave).toMatchObject(expectedWave);
       });

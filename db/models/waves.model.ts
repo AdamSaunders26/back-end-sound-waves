@@ -91,7 +91,14 @@ export async function audioTranscriber(path: string) {
 }
 
 export async function selectWaveById(wave_id: string): Promise<Wave> {
-  const wave_query = `SELECT * FROM waves WHERE wave_id = $1;`;
+  const wave_query = `
+    SELECT w.wave_id, w.title, w.created_at, w.username, b.board_slug, w.likes, w.transcript, w.censor, w.wave_url, b.board_name, COUNT(c.comment_id) AS comment_count 
+    FROM waves AS w
+    LEFT JOIN comments AS c ON w.wave_id = c.wave_id
+    LEFT JOIN boards AS b ON b.board_slug = b.board_slug
+    WHERE w.wave_id = $1
+    GROUP BY w.wave_id, c.wave_id, b.board_slug;
+  `;
 
   const { rows }: { rows: Wave[] } = await db.query(wave_query, [wave_id]);
 

@@ -5,14 +5,14 @@ import axios from "axios";
 
 export async function selectWaves(): Promise<Wave[]> {
   const waves_query = `SELECT wave_id(waves), title(waves), wave_url(waves), created_at(waves), username(waves), board_name(boards), transcript (waves), censor(waves), likes(waves), board_slug(boards), COUNT(comment_id(comments)) AS comment_count
- FROM waves 
+ FROM waves
  LEFT JOIN comments ON wave_id(waves)= wave_id(comments)
  LEFT JOIN boards ON board_slug(boards) = board_slug(waves)
- GROUP BY wave_id(waves), wave_id(comments), board_slug(boards) 
+ GROUP BY wave_id(waves), wave_id(comments), board_slug(boards)
  ORDER BY wave_id(waves) DESC;`;
 
   const { rows }: { rows: Wave[] } = await db.query(waves_query);
-  
+
   return rows;
 }
 
@@ -20,26 +20,24 @@ export const insertWave = (
   {
     title,
     username,
-    board_name,
+    board_slug,
     created_at,
   }: {
     title: string;
     username: string;
-    board_name: string;
+    board_slug: string;
     created_at: string;
   },
   wave_url: string,
   transcript: string
 ): Promise<Wave> => {
-  return db.query(
-    `
+  return db.query(`
     INSERT INTO waves
-      (title, username, board_name, wave_url, created_at, transcript)
+      (title, username, board_slug, wave_url, created_at, transcript)
     VALUES
       ($1, $2, $3, $4, $5, $6)
-    RETURNING *;
-  `,
-    [title, username, board_name, wave_url, created_at, transcript]
+    RETURNING *;`,
+    [title, username, board_slug, wave_url, created_at, transcript]
   );
 };
 

@@ -3,6 +3,7 @@ const seed = require("../dist/db/seeds/seed");
 const testData = require("../dist/db/test-data/index");
 const request = require("supertest");
 const db = require("../dist/db/connection");
+const endpoints = require("../endpoints.json")
 
 beforeEach(() => seed(testData));
 afterAll(() => {
@@ -126,5 +127,17 @@ describe("POST /api/waves", () => {
     // };
 
     console.log(testFormData);
+  })
+});
+
+describe("GET /api", () => {
+  test("200: Should return an object of the endpoints ", () => {
+    return request(app)
+    .get("/api")
+    .expect(200)
+    .then(({body}) => {
+     expect(typeof body).toBe("object")
+     expect(body).toEqual(endpoints)
+    })
   });
 });

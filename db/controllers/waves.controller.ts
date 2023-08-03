@@ -1,5 +1,10 @@
 import { Request, Response, NextFunction } from "express";
-import { selectWaveById, selectWaves, insertWave } from "../models/waves.model";
+import {
+  audioTranscriber,
+  insertWave,
+  selectWaves,
+  selectWaveById,
+} from "../models/waves.model";
 import { Wave } from "../types/soundwaves-types";
 import { createClient } from "@supabase/supabase-js";
 import fs from "fs/promises";
@@ -20,22 +25,28 @@ export const storeWave = (req: Request, res: Response, next: NextFunction) => {
     <string>process.env.SUPABASE_PROJECT_URL,
     <string>process.env.SUPABASE_API_KEY
   );
-
-  fs.readFile(`${__dirname}/../../../${req.file?.path}`)
+  
+  const audioFilePath = `${__dirname}/../../../${req.file?.path}`;
+  fs.readFile(audioFilePath)
     .then((file) => {
       return supabase.storage
         .from("waves")
         .upload(`${req.file?.filename}.webm`, file);
     })
     .then(() => {
-      insertWave(req.body, `${req.file?.filename}.webm`)
-        .then(() => {
-          console.log(req.body, req.file);
-          res.status(200).send({ success: true });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      return audioTranscriber(audioFilePath);
+    })
+    .then((transcript) => {
+      return insertWave(req.body, `${req.file?.filename}.webm`, transcript);
+    })
+    .then(() => {
+      res.status(200).send({ success: true });
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      return fs.rm(audioFilePath);
     });
 };
 

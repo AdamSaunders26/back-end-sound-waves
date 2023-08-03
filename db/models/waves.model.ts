@@ -31,3 +31,11 @@ const waves_query = `SELECT wave_id(waves), title(waves), wave_url(waves), creat
  LEFT JOIN boards ON board_name(boards) = board_name(waves)
  GROUP BY wave_id(waves), wave_id(comments), board_name(boards) 
  ORDER BY wave_id(waves) DESC;`;
+
+export async function selectWaveById(wave_id: string): Promise<Wave> {
+  const wave_query = `SELECT * FROM waves WHERE wave_id = $1;`;
+
+  const { rows }: { rows: Wave[] } = await db.query(wave_query, [wave_id]);
+
+  return rows[0];
+}

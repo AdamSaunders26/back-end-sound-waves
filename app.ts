@@ -1,8 +1,6 @@
-import express, { Express, Request, Response } from 'express';
-import dotenv from 'dotenv';
-import { getWaves, storeWave } from './db/controllers/waves.controller';
-import { getBoards } from './db/controllers/boards.controller';
-import { getCommentsByWaveId } from "./db/controllers/comments.controller";
+import express, { Express, Request, Response } from "express";
+import dotenv from "dotenv";
+import { getWaveById, getWaves, storeWave, getCommentsByWaveId, getBoards } from "./db/controllers/waves.controller";
 import cors from 'cors';
 import multer from 'multer';
 
@@ -24,5 +22,7 @@ app.post('/api/waves', upload.single('audio_file'), storeWave);
 app.get('/api/boards', getBoards);
 
 app.get("/api/waves/:wave_id/comments", getCommentsByWaveId);
+
+app.get("/api/waves/:wave_id", getWaveById);
 
 module.exports = app;

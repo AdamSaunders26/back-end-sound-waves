@@ -1,6 +1,7 @@
 import { Wave } from "../types/soundwaves-types";
 const db = require("../connection");
 import fs from "fs/promises";
+import axios from "axios";
 
 export async function selectWaves(): Promise<Wave[]> {
   const { rows }: { rows: Wave[] } = await db.query("SELECT * FROM waves;");
@@ -35,66 +36,39 @@ export const insertWave = (
   );
 };
 
-export async function initiateTranscription(path: string) {
+export async function audioTranscriber(path: string) {
   console.log(`Uploading file: ${path}`);
   const data = await fs.readFile(path);
-  const url = "https://api.assemblyai.com/v2/upload";
-  const api_token = process.env.ASSEMBLYAI_API_TOKEN;
   const headers = {
-    authorization: api_token,
-    "content-type": "application/json",
+    authorization: process.env.ASSEMBLYAI_API_TOKEN,
   };
+  const uploadResponse = await axios.post(
+    "https://api.assemblyai.com/v2/upload",
+    data,
+    { headers }
+  );
 
-  return fetch(url, {
-    method: "POST",
-    body: data,
-    headers: {
-      "Content-Type": "application/octet-stream",
-      Authorization: api_token,
+  const { upload_url } = uploadResponse.data;
+  const transcriptIdResponse = await axios.post(
+    "https://api.assemblyai.com/v2/transcript",
+    {
+      audio_url: upload_url,
     },
-    language_detection: true,
-    filter_profanity: true,
-  })
-    .then((response) => {
-      if (response.status === 200) {
-        return response.json();
-      } else {
-        console.error(`Error: ${response.status} - ${response.statusText}`);
-        return Promise.reject({ msg: "error", status: response.status });
-      }
-    })
-    .then(({ upload_url }) => {
-      // console.log(upload_url);
-      const webhook_url = process.env.APP_URL + "/waves-transcript";
-      console.log(webhook_url);
-      return fetch("https://api.assemblyai.com/v2/transcript", {
-        method: "POST",
-        body: JSON.stringify({
-          audio_url: upload_url,
-        }),
-        headers,
-      }).then((response) => {
-        return response.json();
-      });
-    })
-    .then(async ({ id }) => {
-      const pollingEndpoint = `https://api.assemblyai.com/v2/transcript/${id}`;
+    { headers }
+  );
+  const { id } = transcriptIdResponse.data;
+  const pollingEndpoint = `https://api.assemblyai.com/v2/transcript/${id}`;
 
-      while (true) {
-        const pollingResponse = await fetch(pollingEndpoint, { headers });
-        const transcriptionResult = await pollingResponse.json();
+  while (true) {
+    const pollingResponse = await axios.get(pollingEndpoint, { headers });
+    const transcriptionResult = pollingResponse.data;
 
-        if (transcriptionResult.status === "completed") {
-          // console.log(transcriptionResult.text, ":while");
-          return transcriptionResult.text;
-        } else if (transcriptionResult.status === "error") {
-          throw new Error(`Transcription failed: ${transcriptionResult.error}`);
-        }
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+    if (transcriptionResult.status === "completed") {
+      return transcriptionResult.text;
+    } else if (transcriptionResult.status === "error") {
+      throw new Error(`Transcription failed: ${transcriptionResult.error}`);
+    }
+  }
 }
 
 const waves_query = `SELECT wave_id(waves), title(waves), wave_url(waves), created_at(waves), username(waves), board_name(boards), transcript  (waves), censor(waves), likes(waves), board_slug (boards), COUNT(comment_id(comments)) AS comment_count

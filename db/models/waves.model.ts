@@ -4,7 +4,7 @@ import fs from "fs/promises";
 import axios from "axios";
 
 export async function selectWaves(): Promise<Wave[]> {
-  const waves_query = `SELECT wave_id(waves), title(waves), wave_url(waves), created_at(waves), username(waves), board_name(boards), transcript (waves), censor(waves), likes(waves), board_slug(boards), COUNT(comment_id(comments)) AS comment_count
+  const waves_query = `SELECT wave_id(waves), title(waves), wave_url(waves), username(waves), board_name(boards), transcript (waves), censor(waves), likes(waves), board_slug(boards), COUNT(comment_id(comments)) AS comment_count
  FROM waves
  LEFT JOIN comments ON wave_id(waves)= wave_id(comments)
  LEFT JOIN boards ON board_slug(boards) = board_slug(waves)
@@ -21,23 +21,22 @@ export const insertWave = (
     title,
     username,
     board_slug,
-    created_at,
   }: {
     title: string;
     username: string;
     board_slug: string;
-    created_at: string;
   },
   wave_url: string,
   transcript: string
 ): Promise<Wave> => {
-  return db.query(`
+  return db.query(
+    `
     INSERT INTO waves
-      (title, username, board_slug, wave_url, created_at, transcript)
+      (title, username, board_slug, wave_url, transcript)
     VALUES
-      ($1, $2, $3, $4, $5, $6)
+      ($1, $2, $3, $4, $5)
     RETURNING *;`,
-    [title, username, board_slug, wave_url, created_at, transcript]
+    [title, username, board_slug, wave_url, transcript]
   );
 };
 

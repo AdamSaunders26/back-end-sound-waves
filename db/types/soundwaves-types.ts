@@ -32,6 +32,4 @@ export interface Comment {
   wave_id: number;
 }
 
-export interface Endpoints{
-  
-}
+export interface Endpoints {}

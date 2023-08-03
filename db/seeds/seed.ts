@@ -39,7 +39,7 @@ const seed = ({
       board_slug VARCHAR NOT NULL PRIMARY KEY,
       board_name VARCHAR NOT NULL,
       description VARCHAR NOT NULL,
-      created_at VARCHAR NOT NULL,
+      created_at TIMESTAMP DEFAULT NOW(),
       username VARCHAR REFERENCES users(username) NOT NULL
     );`);
     })
@@ -49,7 +49,7 @@ const seed = ({
       wave_id SERIAL PRIMARY KEY,
       title VARCHAR NOT NULL,
       wave_url VARCHAR NOT NULL,
-      created_at VARCHAR NOT NULL,
+      created_at TIMESTAMP DEFAULT NOW(),
       username VARCHAR REFERENCES users (username) NOT NULL,
       board_slug VARCHAR REFERENCES boards (board_slug) NOT NULL,
       transcript VARCHAR,
@@ -62,7 +62,7 @@ const seed = ({
     CREATE TABLE comments (
       comment_id SERIAL PRIMARY KEY,
       comment VARCHAR NOT NULL,
-      created_at VARCHAR NOT NULL,
+      created_at TIMESTAMP DEFAULT NOW(),
       likes INT DEFAULT 0,
       username VARCHAR REFERENCES users (username) NOT NULL,
       wave_id INT REFERENCES waves (wave_id) NOT NULL
@@ -84,41 +84,36 @@ const seed = ({
     })
     .then(() => {
       const insertBoardsData = format(
-        "INSERT INTO boards ( board_name, board_slug, created_at, username, description ) VALUES %L RETURNING * ",
-        boardsData.map(
-          ({ board_name, board_slug, created_at, username, description }) => [
-            board_name,
-            board_slug,
-            created_at,
-            username,
-            description,
-          ]
-        )
+        "INSERT INTO boards ( board_name, board_slug, username, description ) VALUES %L RETURNING * ",
+        boardsData.map(({ board_name, board_slug, username, description }) => [
+          board_name,
+          board_slug,
+          username,
+          description,
+        ])
       );
       return db.query(insertBoardsData);
     })
     .then(() => {
       const insertWavesData = format(
-        "INSERT INTO waves ( title, wave_url, created_at, username, board_slug, transcript) VALUES %L RETURNING * ",
+        "INSERT INTO waves ( title, wave_url,  username, board_slug, transcript) VALUES %L RETURNING * ",
         wavesData.map(
-          ({
+          ({ title, wave_url, username, board_slug, transcript }) => [
             title,
             wave_url,
-            created_at,
             username,
             board_slug,
             transcript,
-          }) => [title, wave_url, created_at, username, board_slug, transcript]
+          ]
         )
       );
       return db.query(insertWavesData);
     })
     .then(() => {
       const insertCommentsData = format(
-        "INSERT INTO comments ( comment, created_at, username, wave_id) VALUES %L RETURNING * ",
-        commentsData.map(({ comment, created_at, username, wave_id }) => [
+        "INSERT INTO comments ( comment, username, wave_id) VALUES %L RETURNING * ",
+        commentsData.map(({ comment, username, wave_id }) => [
           comment,
-          created_at,
           username,
           wave_id,
         ])

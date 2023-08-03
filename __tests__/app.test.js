@@ -11,7 +11,7 @@ afterAll(() => {
 });
 
 describe("GET /api/waves", () => {
-  test("200: should return all 10 waves", () => {
+  test("200: Should return all 10 waves", () => {
     return request(app)
       .get("/api/waves")
       .expect(200)
@@ -40,7 +40,7 @@ describe("GET /api/waves", () => {
 });
 
 describe("GET /api/boards", () => {
-  test("200: should return all boards", () => {
+  test("200: Should return all boards", () => {
     return request(app)
       .get("/api/boards")
       .expect(200)
@@ -63,7 +63,7 @@ describe("GET /api/boards", () => {
 });
 
 describe("GET /api/waves/:wave_id/comments", () => {
-  test("200: should return all the comments for a specific wave_id", () => {
+  test("200: Should return all the comments for a specific wave_id", () => {
     return request(app)
       .get("/api/waves/3/comments")
       .expect(200)
@@ -87,7 +87,7 @@ describe("GET /api/waves/:wave_id/comments", () => {
 });
 
 describe("GET /api/waves/:wave_id", () => {
-  test("should return a single wave when given an id ", () => {
+  test("200: Should return a single wave when given an id ", () => {
     return request(app)
       .get("/api/waves/3")
       .expect(200)
@@ -140,4 +140,31 @@ describe("GET /api", () => {
      expect(body).toEqual(endpoints)
     })
   });
+});
+
+describe("GET /api/waves?board=board_slug", () => {
+  test('200: Should return all the waves from a specific board ', () => {
+    return request(app)
+    .get("/api/waves?board=jerky-boys-the")
+    .expect(200)
+    .then(({body}) => {
+      const {waves} = body
+      expect(Array.isArray(waves)).toBe(true)
+      const expectedWave = {
+        wave_id: expect.any(Number),
+        title: expect.any(String),
+        wave_url: expect.any(String),
+        created_at: expect.any(String),
+        transcript: expect.any(String),
+        likes: expect.any(Number),
+        censor: expect.any(Boolean),
+        username: expect.any(String),
+        board_slug: "jerky-boys-the"
+      };
+      waves.forEach((wave) => {
+        expect(wave).toMatchObject(expectedWave);
+      })
+    })
+  });
+  
 });

@@ -77,5 +77,26 @@
     "exampleResponse": {
       "success": true
     }
+  },
+
+  "GET /api/waves?board=board_slug": {
+    "description": "serves an array of all wave objects for a given board",
+    "exampleResponse": {
+      "waves": [
+        {
+        "wave_id": 10,
+        "title": "Intuitive directional synergy",
+        "wave_url": "http://seesaa.net/lacinia/aenean/sit/amet/justo/morbi/ut.aspx?id=pretium&lobortis=iaculis&convallis=justo&tortor=in&risus=hac&dapibus=habitasse&augue=platea&vel=dictumst&accumsan=etiam&tellus=faucibus&nisi=cursus&eu=urna&orci=ut&mauris=tellus&lacinia=nulla&sapien=ut&quis=erat&libero=id&nullam=mauris&sit=vulputate&amet=elementum&turpis=nullam&elementum=varius&ligula=nulla&vehicula=facilisi&consequat=cras&morbi=non&a=velit&ipsum=nec&integer=nisi&a=vulputate&nibh=nonummy&in=maecenas&quis=tincidunt&justo=lacus&maecenas=at&rhoncus=velit&aliquam=vivamus&lacus=vel&morbi=nulla&quis=eget&tortor=eros&id=elementum&nulla=pellentesque&ultrices=quisque&aliquet=porta&maecenas=volutpat&leo=erat&odio=quisque",
+        "created_at": "2022-09-04T00:00:00Z",
+        "username": "BigA",
+        "board_name": "Ramona and Beezus",
+        "transcript": "The cinematography was stunning.",
+        "censor": true,
+        "likes": 0,
+        "board_slug": "ramona-and-beezus",
+        "comment_count": "1"
+        }
+     ]
+    }
   }
 }

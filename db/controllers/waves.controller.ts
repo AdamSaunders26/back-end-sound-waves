@@ -10,7 +10,8 @@ import { createClient } from "@supabase/supabase-js";
 import fs from "fs/promises";
 
 export const getWaves = (req: Request, res: Response, next: NextFunction) => {
-  selectWaves()
+  const board = req.query.board as string;
+  selectWaves({board}) 
     .then((waves: Wave[]) => {
       res.status(200);
       res.send({ waves });

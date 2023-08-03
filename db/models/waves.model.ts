@@ -3,15 +3,30 @@ const db = require("../connection");
 import fs from "fs/promises";
 import axios from "axios";
 
-export async function selectWaves(): Promise<Wave[]> {
-  const waves_query = `SELECT wave_id(waves), title(waves), wave_url(waves), created_at(waves), username(waves), board_name(boards), transcript (waves), censor(waves), likes(waves), board_slug(boards), COUNT(comment_id(comments)) AS comment_count
+export async function selectWaves({
+  board
+}: {
+  board: string;
+
+}): Promise<Wave[]> {
+
+  let waves_query = `SELECT wave_id(waves), title(waves), wave_url(waves), created_at(waves), username(waves), board_name(boards), transcript (waves), censor(waves), likes(waves), board_slug(boards), COUNT(comment_id(comments)) AS comment_count
  FROM waves
  LEFT JOIN comments ON wave_id(waves)= wave_id(comments)
- LEFT JOIN boards ON board_slug(boards) = board_slug(waves)
- GROUP BY wave_id(waves), wave_id(comments), board_slug(boards)
- ORDER BY wave_id(waves) DESC;`;
+ LEFT JOIN boards ON board_slug(boards) = board_slug(waves) `;
 
-  const { rows }: { rows: Wave[] } = await db.query(waves_query);
+const queryValues = []
+const whereQuery = `WHERE board_slug(waves) = $1 `;
+const remainingQuery = `GROUP BY wave_id(waves), wave_id(comments), board_slug(boards)
+ORDER BY wave_id(waves) DESC;`
+
+if(board) {
+  waves_query += whereQuery 
+  queryValues.push(board)
+}
+waves_query += remainingQuery
+
+  const { rows }: { rows: Wave[] } = await db.query(waves_query, queryValues);
 
   return rows;
 }

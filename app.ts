@@ -9,6 +9,7 @@ import cors from "cors";
 import multer from "multer";
 import { getBoards } from "./db/controllers/boards.controller";
 import { getCommentsByWaveId } from "./db/controllers/comments.controller";
+import { getEndpoints } from "./db/controllers/endpoints.controller";
 
 dotenv.config();
 
@@ -31,5 +32,7 @@ app.get("/api/boards", getBoards);
 app.get("/api/waves/:wave_id/comments", getCommentsByWaveId);
 
 app.get("/api/waves/:wave_id", getWaveById);
+
+app.get("/api", getEndpoints)
 
 module.exports = app;

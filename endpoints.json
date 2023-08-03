@@ -1,0 +1,81 @@
+{
+  "GET /api": {
+    "description": "serves up a json representation of all the available endpoints of the api"
+  },
+
+  "GET /api/waves": {
+    "description": "serves an array of all waves",
+    "exampleResponse": {
+      "waves": [
+        {
+          "wave_id": 10,
+          "title": "Intuitive directional synergy",
+          "wave_url": "http://seesaa.net/lacinia/aenean/sit/amet/justo/morbi/ut.aspx?id=pretium&lobortis=iaculis&convallis=justo&tortor=in&risus=hac&dapibus=habitasse&augue=platea&vel=dictumst&accumsan=etiam&tellus=faucibus&nisi=cursus&eu=urna&orci=ut&mauris=tellus&lacinia=nulla&sapien=ut&quis=erat&libero=id&nullam=mauris&sit=vulputate&amet=elementum&turpis=nullam&elementum=varius&ligula=nulla&vehicula=facilisi&consequat=cras&morbi=non&a=velit&ipsum=nec&integer=nisi&a=vulputate&nibh=nonummy&in=maecenas&quis=tincidunt&justo=lacus&maecenas=at&rhoncus=velit&aliquam=vivamus&lacus=vel&morbi=nulla&quis=eget&tortor=eros&id=elementum&nulla=pellentesque&ultrices=quisque&aliquet=porta&maecenas=volutpat&leo=erat&odio=quisque",
+          "created_at": "2022-09-04T00:00:00Z",
+          "username": "BigA",
+          "board_name": "Ramona and Beezus",
+          "transcript": "The cinematography was stunning.",
+          "censor": true,
+          "likes": 0,
+          "board_slug": "ramona-and-beezus",
+          "comment_count": "1"
+        }
+      ]
+    }
+  },
+
+  "GET /api/boards": {
+    "description": "serves an array of all boards",
+    "exampleResponse": {
+      "boards": [
+        {
+          "board_slug": "ramona-and-beezus",
+          "board_name": "Ramona and Beezus",
+          "description": "bla bla",
+          "created_at": "2023-06-04T00:00:00Z",
+          "username": "BigJ"
+        }
+      ]
+    }
+  },
+
+  "GET /api/waves/:wave_id": {
+    "description": "serves a single wave by id",
+    "exampleResponse": {
+      "wave": {
+        "wave_id": 8,
+        "title": "Robust eco-centric secured line",
+        "wave_url": "http://tinypic.com/mi/in/porttitor/pede.jsp?sollicitudin=vivamus&vitae=vestibulum&consectetuer=sagittis&eget=sapien&rutrum=cum&at=sociis&lorem=natoque&integer=penatibus&tincidunt=et&ante=magnis&vel=dis&ipsum=parturient&praesent=montes&blandit=nascetur&lacinia=ridiculus&erat=mus&vestibulum=etiam&sed=vel&magna=augue&at=vestibulum&nunc=rutrum&commodo=rutrum&placerat=neque&praesent=aenean&blandit=auctor&nam=gravida&nulla=sem&integer=praesent&pede=id&justo=massa&lacinia=id&eget=nisl&tincidunt=venenatis&eget=lacinia&tempus=aenean&vel=sit&pede=amet&morbi=justo&porttitor=morbi&lorem=ut&id=odio&ligula=cras&suspendisse=mi&ornare=pede&consequat=malesuada&lectus=in&in=imperdiet&est=et&risus=commodo&auctor=vulputate&sed=justo&tristique=in&in=blandit&tempus=ultrices&sit=enim&amet=lorem&sem=ipsum&fusce=dolor&consequat=sit&nulla=amet&nisl=consectetuer&nunc=adipiscing&nisl=elit&duis=proin&bibendum=interdum&felis=mauris&sed=non&interdum=ligula",
+        "created_at": "2022-09-04T00:00:00Z",
+        "username": "BigM",
+        "board_slug": "last-letter",
+        "transcript": "The characters were well-developed.",
+        "censor": true,
+        "likes": 0
+      }
+    }
+  },
+
+  "GET /api/waves/:wave_id/comments": {
+    "description": "serves an array of comments for a wave",
+    "exampleResponse": {
+      "comments": [
+        {
+          "comment_id": 6,
+          "comment": "Exclusive regional system engine",
+          "created_at": "2022-12-06T17:35:51Z",
+          "likes": 0,
+          "username": "BigC",
+          "wave_id": 8
+        }
+      ]
+    }
+  },
+
+  "POST /api/waves": {
+    "description": "adds a new wave",
+    "exampleResponse": {
+      "success": true
+    }
+  }
+}

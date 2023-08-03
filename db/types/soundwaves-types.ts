@@ -31,3 +31,7 @@ export interface Comment {
   username: string;
   wave_id: number;
 }
+
+export interface Endpoints{
+  
+}

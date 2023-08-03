@@ -99,7 +99,7 @@ export async function selectWaveById(wave_id: string): Promise<Wave> {
     WHERE w.wave_id = $1
     GROUP BY w.wave_id, c.wave_id, b.board_slug;
   `;
-
+  // Delete this comment
   const { rows }: { rows: Wave[] } = await db.query(wave_query, [wave_id]);
 
   return rows[0];

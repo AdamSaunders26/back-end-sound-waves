@@ -34,15 +34,20 @@ export const storeWave = (req: Request, res: Response, next: NextFunction) => {
     .then(() => {
       return initiateTranscription(`${__dirname}/../../../${req.file?.path}`);
     })
-        .then((transcript) => {
-      insertWave(req.body, `${req.file?.filename}.webm`, transcript)
-        .then(() => {
-          // console.log(req.body, req.file);
-          res.status(200).send({ success: true });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    .then((transcript) => {
+      return insertWave(req.body, `${req.file?.filename}.webm`, transcript);
+    })
+    .then(() => {
+      // console.log(req.body, req.file);
+      console.log("sent");
+      res.status(200).send({ success: true });
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      console.log("deleting");
+      return fs.rm(`${__dirname}/../../../${req.file?.path}`);
     });
 };
 

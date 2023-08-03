@@ -92,7 +92,7 @@ describe("GET /api/waves/:wave_id", () => {
       .then(({ body }) => {
         const { wave } = body;
         const expectedWave = {
-          wave_id: expect(3),
+          wave_id: 3,
           title: expect.any(String),
           wave_url: expect.any(String),
           created_at: expect.any(String),

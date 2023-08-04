@@ -96,7 +96,27 @@
         "board_slug": "ramona-and-beezus",
         "comment_count": "1"
         }
-     ]
+      ]
+    }
+  },
+
+  "GET /api/users": {
+    "description": "serves an array of all user objects ordered by username A-Z",
+    "exampleResponse": {
+      "users": [
+        {
+        "username": "Adam",
+        "email": "aantognazzi8@jimdo.com",
+        "avatar_url": "http://dummyimage.com/196x100.png/5fa2dd/ffffff",
+        "password": "$2a$04$H.8.1IEF5nfICzTo8TNN9OrqSj9.9egqZSm01MKkzO3Sgph12hDOu"
+        },
+        {
+        "username": "BigA",
+        "email": "cpragnell3@yellowbook.com",
+        "avatar_url": "http://dummyimage.com/182x100.png/dddddd/000000",
+        "password": "$2a$04$H.8.1IEF5nfICzTo8TNN9OrqSj9.9egqZSm01MKkzO3Sgph12hDOu"
+        }
+      ]
     }
   }
 }

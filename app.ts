@@ -10,6 +10,7 @@ import multer from "multer";
 import { getBoards } from "./db/controllers/boards.controller";
 import { getCommentsByWaveId } from "./db/controllers/comments.controller";
 import { getEndpoints } from "./db/controllers/endpoints.controller";
+import { getUsers } from "./db/controllers/users.controller";
 
 dotenv.config();
 
@@ -34,5 +35,7 @@ app.get("/api/waves/:wave_id/comments", getCommentsByWaveId);
 app.get("/api/waves/:wave_id", getWaveById);
 
 app.get("/api", getEndpoints)
+
+app.get("/api/users", getUsers)
 
 module.exports = app;

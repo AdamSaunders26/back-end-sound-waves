@@ -18,7 +18,6 @@ export interface Board {
 }
 
 export interface User {
-  user_id: number;
   username: string;
   email: string;
   avatar_url: string;

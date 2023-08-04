@@ -128,7 +128,7 @@ describe("POST /api/waves", () => {
     //     upload: fs
     // };
 
-    console.log(testFormData);
+    // console.log(testFormData);
   })
 });
 
@@ -138,8 +138,8 @@ describe("GET /api", () => {
     .get("/api")
     .expect(200)
     .then(({body}) => {
-     expect(typeof body).toBe("object")
-     expect(body).toEqual(endpoints)
+      expect(typeof body).toBe("object")
+      expect(body).toEqual(endpoints)
     })
   });
 });
@@ -168,5 +168,25 @@ describe("GET /api/waves?board=board_slug", () => {
       })
     })
   });
-  
+});
+
+describe('GET api/users', () => {
+  test('200: should return all users', () => {
+    return request(app)
+    .get("/api/users")
+    .expect(200)
+    .then(({ body }) => {
+      const { users } = body
+      expect(Array.isArray(users)).toBe(true)
+      const expectedUser = {
+        username: expect.any(String),
+        email: expect.any(String),
+        avatar_url: expect.any(String),
+        password: expect.any(String),
+      };
+      users.forEach((user) => {
+        expect(user).toMatchObject(expectedUser);
+      })
+    })
+  });
 });

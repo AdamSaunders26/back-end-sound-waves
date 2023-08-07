@@ -8,17 +8,18 @@
     "exampleResponse": {
       "waves": [
         {
-          "wave_id": 10,
-          "title": "Intuitive directional synergy",
-          "wave_url": "http://seesaa.net/lacinia/aenean/sit/amet/justo/morbi/ut.aspx?id=pretium&lobortis=iaculis&convallis=justo&tortor=in&risus=hac&dapibus=habitasse&augue=platea&vel=dictumst&accumsan=etiam&tellus=faucibus&nisi=cursus&eu=urna&orci=ut&mauris=tellus&lacinia=nulla&sapien=ut&quis=erat&libero=id&nullam=mauris&sit=vulputate&amet=elementum&turpis=nullam&elementum=varius&ligula=nulla&vehicula=facilisi&consequat=cras&morbi=non&a=velit&ipsum=nec&integer=nisi&a=vulputate&nibh=nonummy&in=maecenas&quis=tincidunt&justo=lacus&maecenas=at&rhoncus=velit&aliquam=vivamus&lacus=vel&morbi=nulla&quis=eget&tortor=eros&id=elementum&nulla=pellentesque&ultrices=quisque&aliquet=porta&maecenas=volutpat&leo=erat&odio=quisque",
-          "created_at": "2022-09-04T00:00:00Z",
-          "username": "BigA",
-          "board_name": "Ramona and Beezus",
-          "transcript": "The cinematography was stunning.",
-          "censor": true,
-          "likes": 0,
-          "board_slug": "ramona-and-beezus",
-          "comment_count": "1"
+        "wave_id": 10,
+        "title": "Intuitive directional synergy",
+        "created_at": "2023-08-05T15:14:28.081Z",
+        "username": "BigA",
+        "avatar_url": "https://images.unsplash.com/photo-1551269901-5c5e14c25df7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aGFycnklMjBwb3R0ZXJ8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=1200&q=60",
+        "wave_url": "http://seesaa.net/lacinia/aenean/sit/amet/justo/morbi/ut.aspx?id=pretium&lobortis=iaculis&convallis=justo&tortor=in&risus=hac&dapibus=habitasse&augue=platea&vel=dictumst&accumsan=etiam&tellus=faucibus&nisi=cursus&eu=urna&orci=ut&mauris=tellus&lacinia=nulla&sapien=ut&quis=erat&libero=id&nullam=mauris&sit=vulputate&amet=elementum&turpis=nullam&elementum=varius&ligula=nulla&vehicula=facilisi&consequat=cras&morbi=non&a=velit&ipsum=nec&integer=nisi&a=vulputate&nibh=nonummy&in=maecenas&quis=tincidunt&justo=lacus&maecenas=at&rhoncus=velit&aliquam=vivamus&lacus=vel&morbi=nulla&quis=eget&tortor=eros&id=elementum&nulla=pellentesque&ultrices=quisque&aliquet=porta&maecenas=volutpat&leo=erat&odio=quisque",
+        "board_name": "Ramona and Beezus",
+        "transcript": "The cinematography was stunning.",
+        "censor": true,
+        "likes": 0,
+        "board_slug": "ramona-and-beezus",
+        "comment_count": "1"
         }
       ]
     }
@@ -29,11 +30,12 @@
     "exampleResponse": {
       "boards": [
         {
-          "board_slug": "ramona-and-beezus",
-          "board_name": "Ramona and Beezus",
-          "description": "bla bla",
-          "created_at": "2023-06-04T00:00:00Z",
-          "username": "BigJ"
+        "board_slug": "seventh-cross-the",
+        "board_name": "Seventh Cross, The",
+        "description": "bla bla",
+        "created_at": "2023-08-05T15:14:28.075Z",
+        "username": "BigC",
+        "avatar_url": "https://images.unsplash.com/photo-1682545888368-587f56efd06e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8YmpqfGVufDB8fDB8fHww&auto=format&fit=crop&w=1200&q=60"
         }
       ]
     }
@@ -61,12 +63,13 @@
     "exampleResponse": {
       "comments": [
         {
-          "comment_id": 6,
-          "comment": "Exclusive regional system engine",
-          "created_at": "2022-12-06T17:35:51Z",
-          "likes": 0,
-          "username": "BigC",
-          "wave_id": 8
+        "comment_id": 10,
+        "comment": "Realigned 24 hour capacity",
+        "created_at": "2023-08-05T15:14:28.085Z",
+        "likes": 0,
+        "username": "BigJ",
+        "wave_id": 6,
+        "avatar_url": "https://images.unsplash.com/photo-1596706696066-99a44cc64e0f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cm9sbGVyJTIwc2thdGluZ3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=1200&q=60"
         }
       ]
     }

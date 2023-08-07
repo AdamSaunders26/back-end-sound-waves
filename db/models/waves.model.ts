@@ -10,14 +10,16 @@ export async function selectWaves({
 
 }): Promise<Wave[]> {
 
-  let waves_query = `SELECT wave_id(waves), title(waves), wave_url(waves), created_at(waves), username(waves), board_name(boards), transcript (waves), censor(waves), likes(waves), board_slug(boards), COUNT(comment_id(comments)) AS comment_count
- FROM waves
- LEFT JOIN comments ON wave_id(waves)= wave_id(comments)
- LEFT JOIN boards ON board_slug(boards) = board_slug(waves) `;
+  let waves_query = `SELECT wave_id(waves), title(waves), created_at(waves), username(waves), avatar_url(users), wave_url(waves), board_name(boards), transcript (waves), censor(waves), likes(waves), board_slug(boards), COUNT(comment_id(comments)) AS comment_count
+    FROM waves
+    LEFT JOIN users ON username(waves) = username(users)
+    LEFT JOIN comments ON wave_id(waves) = wave_id(comments)
+    LEFT JOIN boards ON board_slug(boards) = board_slug(waves) 
+  `;
 
 const queryValues = []
 const whereQuery = `WHERE board_slug(waves) = $1 `;
-const remainingQuery = `GROUP BY wave_id(waves), wave_id(comments), board_slug(boards)
+const remainingQuery = `GROUP BY wave_id(waves), wave_id(comments), board_slug(boards), avatar_url(users)
 ORDER BY wave_id(waves) DESC;`
 
 if(board) {
@@ -92,12 +94,13 @@ export async function audioTranscriber(path: string) {
 
 export async function selectWaveById(wave_id: string): Promise<Wave> {
   const wave_query = `
-    SELECT w.wave_id, w.title, w.created_at, w.username, b.board_slug, w.likes, w.transcript, w.censor, w.wave_url, b.board_name, COUNT(c.comment_id) AS comment_count 
+    SELECT w.wave_id, w.title, w.created_at, w.username, b.board_slug, w.likes, w.transcript, w.censor, w.wave_url, u.avatar_url, b.board_name, COUNT(c.comment_id) AS comment_count 
     FROM waves AS w
+    LEFT JOIN users AS u ON w.username = u.username
     LEFT JOIN comments AS c ON w.wave_id = c.wave_id
     LEFT JOIN boards AS b ON b.board_slug = b.board_slug
     WHERE w.wave_id = $1
-    GROUP BY w.wave_id, c.wave_id, b.board_slug;
+    GROUP BY w.wave_id, c.wave_id, b.board_slug, u.avatar_url;
   `;
   
   const { rows }: { rows: Wave[] } = await db.query(wave_query, [wave_id]);

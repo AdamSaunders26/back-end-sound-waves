@@ -32,7 +32,7 @@ module.exports = [
   {
     username: "Valentina",
     email: "mtschierasche6@angelfire.com",
-    avatar_url: "",
+    avatar_url: "https://images.unsplash.com/photo-1504450874802-0ba2bcd9b5ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bGl6YXJkfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
   },
   {
     username: "Jason",

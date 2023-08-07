@@ -31,6 +31,7 @@ describe("GET /api/waves", () => {
           transcript: expect.any(String),
           censor: expect.any(Boolean),
           wave_url: expect.any(String),
+          avatar_url: expect.any(String),
         };
         waves.forEach((wave) => {
           expect(wave).toMatchObject(expectedWave);
@@ -54,6 +55,7 @@ describe("GET /api/boards", () => {
           description: expect.any(String),
           created_at: expect.any(String),
           username: expect.any(String),
+          avatar_url: expect.any(String),
         };
         boards.forEach((board) => {
           expect(board).toMatchObject(expectedBoards);
@@ -76,6 +78,7 @@ describe("GET /api/waves/:wave_id/comments", () => {
           likes: expect.any(Number),
           created_at: expect.any(String),
           username: expect.any(String),
+          avatar_url: expect.any(String),
           comment_id: expect.any(Number),
           wave_id: expect.any(Number),
         };
@@ -102,6 +105,7 @@ describe("GET /api/waves/:wave_id", () => {
           likes: expect.any(Number),
           censor: expect.any(Boolean),
           username: expect.any(String),
+          avatar_url: expect.any(String),
           board_slug: expect.any(String),
           board_name: expect.any(String),
           comment_count: expect.any(String),
@@ -161,7 +165,8 @@ describe("GET /api/waves?board=board_slug", () => {
         likes: expect.any(Number),
         censor: expect.any(Boolean),
         username: expect.any(String),
-        board_slug: "jerky-boys-the"
+        board_slug: "jerky-boys-the",
+        avatar_url: expect.any(String),
       };
       waves.forEach((wave) => {
         expect(wave).toMatchObject(expectedWave);

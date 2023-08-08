@@ -8,10 +8,11 @@ import {
 import { Wave } from "../types/soundwaves-types";
 import { createClient } from "@supabase/supabase-js";
 import fs from "fs/promises";
+import { badWords } from "../../Facebook Bad Words List - May 1, 2022";
 
 export const getWaves = (req: Request, res: Response, next: NextFunction) => {
   const board = req.query.board as string;
-  selectWaves({board}) 
+  selectWaves({ board })
     .then((waves: Wave[]) => {
       res.status(200);
       res.send({ waves });
@@ -26,7 +27,7 @@ export const storeWave = (req: Request, res: Response, next: NextFunction) => {
     <string>process.env.SUPABASE_PROJECT_URL,
     <string>process.env.SUPABASE_API_KEY
   );
-  
+
   const audioFilePath = `${__dirname}/../../../${req.file?.path}`;
   fs.readFile(audioFilePath)
     .then((file) => {
@@ -38,10 +39,15 @@ export const storeWave = (req: Request, res: Response, next: NextFunction) => {
       return audioTranscriber(audioFilePath);
     })
     .then((transcript) => {
-      return insertWave(req.body, `${req.file?.filename}.webm`, transcript);
+      return insertWave(
+        req.body,
+        `${req.file?.filename}.webm`,
+        transcript,
+        waveCensor(transcript)
+      );
     })
-    .then(() => {
-      res.status(200).send({ success: true });
+    .then((wave) => {
+      res.status(200).send({ success: true, wave });
     })
     .catch((err) => {
       console.log(err);
@@ -65,3 +71,15 @@ export const getWaveById = (
       console.log(err, "<<< getWaveById err");
     });
 };
+
+function waveCensor(transcript: string) {
+  const badWordsArr = badWords.split(",");
+
+  for (let i = 0; i < badWordsArr.length; i++) {
+    const regex = new RegExp(`\\b(${badWordsArr[i]})\\b`);
+    if (transcript.match(regex)) {
+      return false;
+    }
+  }
+  return true;
+}

@@ -4,12 +4,10 @@ import fs from "fs/promises";
 import axios from "axios";
 
 export async function selectWaves({
-  board
+  board,
 }: {
   board: string;
-
 }): Promise<Wave[]> {
-
   let waves_query = `SELECT wave_id(waves), title(waves), created_at(waves), username(waves), avatar_url(users), wave_url(waves), board_name(boards), transcript (waves), censor(waves), likes(waves), board_slug(boards), COUNT(comment_id(comments)) AS comment_count
     FROM waves
     LEFT JOIN users ON username(waves) = username(users)
@@ -17,16 +15,16 @@ export async function selectWaves({
     LEFT JOIN boards ON board_slug(boards) = board_slug(waves) 
   `;
 
-const queryValues = []
-const whereQuery = `WHERE board_slug(waves) = $1 `;
-const remainingQuery = `GROUP BY wave_id(waves), wave_id(comments), board_slug(boards), avatar_url(users)
-ORDER BY wave_id(waves) DESC;`
+  const queryValues = [];
+  const whereQuery = `WHERE board_slug(waves) = $1 `;
+  const remainingQuery = `GROUP BY wave_id(waves), wave_id(comments), board_slug(boards), avatar_url(users)
+ORDER BY wave_id(waves) DESC;`;
 
-if(board) {
-  waves_query += whereQuery 
-  queryValues.push(board)
-}
-waves_query += remainingQuery
+  if (board) {
+    waves_query += whereQuery;
+    queryValues.push(board);
+  }
+  waves_query += remainingQuery;
 
   const { rows }: { rows: Wave[] } = await db.query(waves_query, queryValues);
 
@@ -44,17 +42,22 @@ export const insertWave = (
     board_slug: string;
   },
   wave_url: string,
-  transcript: string
+  transcript: string,
+  censor: boolean
 ): Promise<Wave> => {
-  return db.query(
-    `
+  return db
+    .query(
+      `
     INSERT INTO waves
-      (title, username, board_slug, wave_url, transcript)
+      (title, username, board_slug, wave_url, transcript, censor)
     VALUES
-      ($1, $2, $3, $4, $5)
+      ($1, $2, $3, $4, $5, $6)
     RETURNING *;`,
-    [title, username, board_slug, wave_url, transcript]
-  );
+      [title, username, board_slug, wave_url, transcript, censor]
+    )
+    .then(({ rows }: { rows: Wave[] }) => {
+      return rows[0];
+    });
 };
 
 export async function audioTranscriber(path: string) {
@@ -102,7 +105,7 @@ export async function selectWaveById(wave_id: string): Promise<Wave> {
     WHERE w.wave_id = $1
     GROUP BY w.wave_id, c.wave_id, b.board_slug, u.avatar_url;
   `;
-  
+
   const { rows }: { rows: Wave[] } = await db.query(wave_query, [wave_id]);
 
   return rows[0];

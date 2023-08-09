@@ -14,3 +14,23 @@ export async function selectCommentsByWaveId(
   ]);
   return rows;
 }
+
+export async function insertComment(
+  wave_id: string,
+  username: string,
+  comment: string
+): Promise<Comment> {
+  const insert_query = `
+    INSERT INTO comments (wave_id, username, comment)
+    VALUES ($1, $2, $3)
+    RETURNING *;
+  `;
+  const { rows }: { rows: Comment[] } = await db.query(insert_query, [
+    wave_id,
+    username,
+    comment,
+  ]);
+
+
+  return rows[0];
+}

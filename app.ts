@@ -8,7 +8,10 @@ import {
 import cors from "cors";
 import multer from "multer";
 import { getBoards } from "./db/controllers/boards.controller";
-import { getCommentsByWaveId } from "./db/controllers/comments.controller";
+import {
+  addComment,
+  getCommentsByWaveId,
+} from "./db/controllers/comments.controller";
 import { getEndpoints } from "./db/controllers/endpoints.controller";
 import { getUsers } from "./db/controllers/users.controller";
 
@@ -34,8 +37,10 @@ app.get("/api/waves/:wave_id/comments", getCommentsByWaveId);
 
 app.get("/api/waves/:wave_id", getWaveById);
 
-app.get("/api", getEndpoints)
+app.get("/api", getEndpoints);
 
-app.get("/api/users", getUsers)
+app.get("/api/users", getUsers);
+
+app.post("/api/waves/:wave_id/comments", addComment);
 
 module.exports = app;

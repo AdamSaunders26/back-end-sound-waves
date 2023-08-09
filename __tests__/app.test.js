@@ -3,7 +3,7 @@ const seed = require("../dist/db/seeds/seed");
 const testData = require("../dist/db/test-data/index");
 const request = require("supertest");
 const db = require("../dist/db/connection");
-const endpoints = require("../endpoints.json")
+const endpoints = require("../endpoints.json");
 
 beforeEach(() => seed(testData));
 afterAll(() => {
@@ -133,65 +133,90 @@ describe("POST /api/waves", () => {
     // };
 
     // console.log(testFormData);
-  })
+  });
 });
 
 describe("GET /api", () => {
   test("200: Should return an object of the endpoints ", () => {
     return request(app)
-    .get("/api")
-    .expect(200)
-    .then(({body}) => {
-      expect(typeof body).toBe("object")
-      expect(body).toEqual(endpoints)
-    })
+      .get("/api")
+      .expect(200)
+      .then(({ body }) => {
+        expect(typeof body).toBe("object");
+        expect(body).toEqual(endpoints);
+      });
   });
 });
 
 describe("GET /api/waves?board=board_slug", () => {
-  test('200: Should return all the waves from a specific board ', () => {
+  test("200: Should return all the waves from a specific board ", () => {
     return request(app)
-    .get("/api/waves?board=jerky-boys-the")
-    .expect(200)
-    .then(({body}) => {
-      const {waves} = body
-      expect(Array.isArray(waves)).toBe(true)
-      const expectedWave = {
-        wave_id: expect.any(Number),
-        title: expect.any(String),
-        wave_url: expect.any(String),
-        created_at: expect.any(String),
-        transcript: expect.any(String),
-        likes: expect.any(Number),
-        censor: expect.any(Boolean),
-        username: expect.any(String),
-        board_slug: "jerky-boys-the",
-        avatar_url: expect.any(String),
-      };
-      waves.forEach((wave) => {
-        expect(wave).toMatchObject(expectedWave);
-      })
-    })
+      .get("/api/waves?board=jerky-boys-the")
+      .expect(200)
+      .then(({ body }) => {
+        const { waves } = body;
+        expect(Array.isArray(waves)).toBe(true);
+        const expectedWave = {
+          wave_id: expect.any(Number),
+          title: expect.any(String),
+          wave_url: expect.any(String),
+          created_at: expect.any(String),
+          transcript: expect.any(String),
+          likes: expect.any(Number),
+          censor: expect.any(Boolean),
+          username: expect.any(String),
+          board_slug: "jerky-boys-the",
+          avatar_url: expect.any(String),
+        };
+        waves.forEach((wave) => {
+          expect(wave).toMatchObject(expectedWave);
+        });
+      });
   });
 });
 
-describe('GET api/users', () => {
-  test('200: should return all users', () => {
+describe("GET /api/users", () => {
+  test("200: Should return all users", () => {
     return request(app)
-    .get("/api/users")
-    .expect(200)
-    .then(({ body }) => {
-      const { users } = body
-      expect(Array.isArray(users)).toBe(true)
-      const expectedUser = {
-        username: expect.any(String),
-        email: expect.any(String),
-        avatar_url: expect.any(String),
-        password: expect.any(String),
-      };
-      users.forEach((user) => {
-        expect(user).toMatchObject(expectedUser);
-      })
-    })
+      .get("/api/users")
+      .expect(200)
+      .then(({ body }) => {
+        const { users } = body;
+        expect(Array.isArray(users)).toBe(true);
+        const expectedUser = {
+          username: expect.any(String),
+          email: expect.any(String),
+          avatar_url: expect.any(String),
+          password: expect.any(String),
+        };
+        users.forEach((user) => {
+          expect(user).toMatchObject(expectedUser);
+        });
+      });
+  });
+});
+
+describe("POST /api/waves/:wave_id/comments", () => {
+  test("201: Should respond with posted comment", () => {
+    const commentToPost = {
+      username: "BigA",
+      comment: "This was very informative.Love it!",
+    };
+    return request(app)
+      .post("/api/waves/1/comments")
+      .send(commentToPost)
+      .expect(201)
+      .then(({ body }) => {
+        const { comment } = body;
+        expect(comment).toHaveProperty("comment_id"),
+        expect.any(Number),
+        expect(comment.username).toBe("BigA"),
+        expect(comment.comment).toBe("This was very informative.Love it!"),
+        expect(comment).toHaveProperty("created_at"),
+        expect.any(String),
+        expect(comment).toHaveProperty("likes"),
+        expect(0),
+        expect(comment.wave_id).toBe(1);
+      });
   });
 });

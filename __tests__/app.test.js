@@ -92,12 +92,12 @@ describe("GET /api/waves/:wave_id/comments", () => {
 describe("GET /api/waves/:wave_id", () => {
   test("200: Should return a single wave when given an id ", () => {
     return request(app)
-      .get("/api/waves/3")
+      .get("/api/waves/4")
       .expect(200)
       .then(({ body }) => {
         const { wave } = body;
         const expectedWave = {
-          wave_id: 3,
+          wave_id: 4,
           title: expect.any(String),
           wave_url: expect.any(String),
           created_at: expect.any(String),
@@ -106,7 +106,7 @@ describe("GET /api/waves/:wave_id", () => {
           censor: expect.any(Boolean),
           username: expect.any(String),
           avatar_url: expect.any(String),
-          board_slug: expect.any(String),
+          board_slug: "jerky-boys-the",
           board_name: expect.any(String),
           comment_count: expect.any(String),
         };
@@ -149,9 +149,9 @@ describe("GET /api", () => {
 });
 
 describe("GET /api/waves?board=board_slug", () => {
-  test("200: Should return all the waves from a specific board ", () => {
+  test("200: Should return all the waves from a specific board", () => {
     return request(app)
-      .get("/api/waves?board=jerky-boys-the")
+      .get("/api/waves?board=cottage-country")
       .expect(200)
       .then(({ body }) => {
         const { waves } = body;
@@ -165,7 +165,7 @@ describe("GET /api/waves?board=board_slug", () => {
           likes: expect.any(Number),
           censor: expect.any(Boolean),
           username: expect.any(String),
-          board_slug: "jerky-boys-the",
+          board_slug: "cottage-country",
           avatar_url: expect.any(String),
         };
         waves.forEach((wave) => {

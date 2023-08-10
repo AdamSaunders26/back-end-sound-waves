@@ -27,7 +27,6 @@ ORDER BY wave_id(waves) DESC;`;
   waves_query += remainingQuery;
 
   const { rows }: { rows: Wave[] } = await db.query(waves_query, queryValues);
-
   return rows;
 }
 
@@ -101,12 +100,11 @@ export async function selectWaveById(wave_id: string): Promise<Wave> {
     FROM waves AS w
     LEFT JOIN users AS u ON w.username = u.username
     LEFT JOIN comments AS c ON w.wave_id = c.wave_id
-    LEFT JOIN boards AS b ON b.board_slug = b.board_slug
+    LEFT JOIN boards AS b ON w.board_slug = b.board_slug
     WHERE w.wave_id = $1
     GROUP BY w.wave_id, c.wave_id, b.board_slug, u.avatar_url;
   `;
 
   const { rows }: { rows: Wave[] } = await db.query(wave_query, [wave_id]);
-
   return rows[0];
 }

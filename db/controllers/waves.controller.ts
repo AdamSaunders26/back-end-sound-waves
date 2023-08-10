@@ -77,7 +77,6 @@ function waveCensor(transcript: string) {
   const lowerCaseTranscript = transcript.toLowerCase()
   for (let i = 0; i < badWordsArr.length; i++) {
     const regex = new RegExp(`\\b(${badWordsArr[i]})\\b`, );
-    console.log(regex)
     if (lowerCaseTranscript.match(regex)) {
       return false;
     }
